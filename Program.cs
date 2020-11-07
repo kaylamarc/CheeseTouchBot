@@ -58,9 +58,11 @@ namespace CheeseTouchBot
 
         public async Task RunBotAsync()
         {
+            StreamReader props = new StreamReader("serverProperties.txt");
+
             var cfg = new DiscordConfiguration
             {
-                Token = "TOKEN_GOES_HERE",
+                Token = props.ReadLine(),
                 TokenType = TokenType.Bot,
 
                 AutoReconnect = true,
@@ -71,8 +73,8 @@ namespace CheeseTouchBot
             // first person to say "the" will be the first to get the cheesetouch
             codeword = "the";
 
-            botID = 1L; // TODO READ FROM FILE
-            roleID = 1L; // TODO READ FROM FILE
+            botID = Convert.ToUInt64(props.ReadLine());
+            roleID = Convert.ToUInt64(props.ReadLine());
 
             // read in blacklist
             blacklist = File.ReadAllLines("blacklist.txt");
